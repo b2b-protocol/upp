@@ -1,5 +1,7 @@
 # Roadmap
 
+This roadmap describes the current draft work plan for UPP.
+
 ## Phase 1
 
 - Draft specification

@@ -26,6 +26,6 @@ This directory contains the current draft documentation for UPP, the Universal P
 
 ## Related artifacts
 
-- `../schemas/`
-- `../openapi/`
-- `../examples/`
+- The JSON Schemas in the repository `schemas/` directory define the current object models for capability documents, RFQs, quotes, purchase orders, invoices, and approvals.
+- The OpenAPI draft in `openapi/upp-api.yaml` defines the current HTTP surface for capability discovery and core procurement resources.
+- The example payloads in the repository `examples/` directory provide a reference capability document and an RFQ-to-invoice workflow example.
