@@ -4,7 +4,7 @@ Version: `0.1.0-draft`
 
 ## 1. Scope
 
-UPP standardizes a minimal set of AI-native procurement workflows between buyers, vendors, marketplaces, procurement tools, and enterprise systems.
+UPP defines a minimal set of AI-native procurement workflows between buyers, vendors, marketplaces, procurement tools, and enterprise systems.
 
 This draft covers:
 
@@ -22,14 +22,14 @@ This draft does not attempt to replace EDI, standardize every procurement docume
 ## 2. Goals
 
 - reduce custom procurement integrations
-- make procurement workflows machine-readable
+- define machine-readable procurement workflows
 - support AI agents without requiring unsafe autonomy
 - preserve compatibility with enterprise systems
 - keep the core small and extensible
 
 ## 3. Object envelope
 
-All top-level UPP objects include a shared envelope:
+All top-level UPP objects use a shared envelope:
 
 ```json
 {
@@ -128,6 +128,7 @@ Namespaced custom fields.
 - Unknown required extensions must fail fast with a clear error.
 - Mutating operations should support idempotency.
 - Capability discovery should be exposed at a stable URL.
+- Implementations may map UPP objects into internal ERP, procurement, or EDI systems without changing the external UPP contract.
 
 ## 7. Example extension keys
 

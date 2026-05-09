@@ -1,8 +1,8 @@
 # Capability Discovery
 
-Capability discovery is the first workflow in UPP.
+Capability discovery is the entry point for UPP integrations.
 
-Before an agent or buyer system submits procurement data, it should be able to discover:
+Before a buyer system, procurement platform, or agent submits procurement data, it should be able to discover:
 
 - supported protocol version
 - supported modules
@@ -17,7 +17,7 @@ Before an agent or buyer system submits procurement data, it should be able to d
 
 ## Why it matters
 
-In legacy B2B integration, these details are often buried in onboarding documents, email threads, or partner-specific implementation guides. UPP makes them machine-readable.
+In many B2B integrations, these details are documented through onboarding documents, email threads, or partner-specific implementation guides. UPP expresses them as machine-readable capability data.
 
 ## Discovery flow
 
@@ -28,7 +28,7 @@ In legacy B2B integration, these details are often buried in onboarding document
 
 ## Minimal requirement
 
-Every UPP implementation should expose a capability document at a stable URL such as:
+A UPP implementation should expose a capability document at a stable URL such as:
 
 - `GET /.well-known/upp-capabilities`
 - or `GET /upp/capabilities`

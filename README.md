@@ -1,8 +1,8 @@
 # B2B Protocol
 
-B2B Protocol is building UPP, the Universal Procurement Protocol: an interoperability layer for AI-native B2B procurement.
+B2B Protocol is developing UPP, the Universal Procurement Protocol.
 
-UPP is designed to help AI agents, buyers, vendors, marketplaces, and enterprise systems exchange procurement workflows through a small core, machine-readable schemas, and extensible APIs. It is not a replacement for EDI on day one. It is a pragmatic protocol layer that can coexist with ERP, procurement, and integration infrastructure already in production.
+UPP is a draft interoperability layer for AI-native B2B procurement. It focuses on machine-readable procurement workflows that can be implemented through JSON schemas, HTTP APIs, and adapters that connect to existing ERP, procurement, and integration systems.
 
 ## What is in this repo
 
@@ -15,7 +15,7 @@ UPP is designed to help AI agents, buyers, vendors, marketplaces, and enterprise
 
 ## Initial scope
 
-The first UPP draft focuses on a minimal procurement workflow:
+The current draft focuses on a minimal procurement workflow:
 
 - Vendor capability discovery
 - RFQ request and response
@@ -31,7 +31,7 @@ The first UPP draft focuses on a minimal procurement workflow:
 - Small core, extensible edges
 - JSON Schema first
 - OpenAPI-compatible
-- Versioned and implementation-first
+- Clear versioning
 - Secure by default
 - Human-readable and machine-readable
 - Compatible with existing ERP and procurement systems

@@ -2,22 +2,22 @@
 
 ## Phase 1
 
-- Publish UPP draft specification
-- Publish initial JSON Schemas
-- Publish draft OpenAPI surface
-- Ship reference examples
-- Launch `b2bprotocol.com`
+- Draft specification
+- Initial JSON Schemas
+- Draft OpenAPI surface
+- Reference examples
+- Website launch
 
 ## Phase 2
 
-- Add reference server and validation tooling
-- Add eventing model for status updates
-- Add approval and invoice matching refinements
-- Add ERP adapter examples
+- Reference server and validation tooling
+- Eventing model for status updates
+- Approval and invoice matching refinements
+- ERP adapter examples
 
 ## Phase 3
 
 - Conformance test suite
 - Partner onboarding guides
 - Mapping guidance for EDI and procurement platforms
-- Community extension registry
+- Extension registry

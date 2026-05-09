@@ -1,6 +1,6 @@
 # Security
 
-UPP is designed for enterprise procurement workflows, which means automation must stay bounded and auditable.
+UPP is intended for enterprise procurement workflows, where automation should remain bounded and auditable.
 
 ## Security principles
 
@@ -13,7 +13,7 @@ UPP is designed for enterprise procurement workflows, which means automation mus
 
 ## Guidance informed by MCP security lessons
 
-MCP is useful as a design reference for discoverable capabilities, resources, and bounded interfaces. It is also a reminder that AI integrations can become unsafe when a system treats model output as executable authority.
+MCP is a useful design reference for discoverable capabilities, resources, and bounded interfaces. It is also a reminder that AI integrations become unsafe when model output is treated as executable authority.
 
 UPP implementations should:
 

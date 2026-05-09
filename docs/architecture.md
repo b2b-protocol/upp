@@ -34,7 +34,7 @@ This allows a UPP workflow to coexist with ERP approvals, EDI invoice delivery, 
 
 ## Architectural model
 
-UPP borrows a few ideas from MCP without turning procurement systems into tool execution frameworks:
+UPP uses a few patterns that are also familiar from MCP-style integrations:
 
 - machine-readable capabilities are discoverable
 - schemas define valid inputs and outputs
@@ -42,4 +42,4 @@ UPP borrows a few ideas from MCP without turning procurement systems into tool e
 - extensions are namespaced
 - unsafe arbitrary execution is out of scope
 
-The protocol should let systems exchange procurement intent and state, not remote shell commands.
+UPP is intended to exchange procurement intent and workflow state, not remote executable instructions.
