@@ -6,8 +6,11 @@
   "required": ["specVersion", "id", "type", "buyer", "vendor", "lineItems", "status", "currency"],
   "properties": {
     "specVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
     "id": { "type": "string" },
     "type": { "const": "PurchaseOrder" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
     "buyer": { "$ref": "#/$defs/party" },
     "vendor": { "$ref": "#/$defs/party" },
     "rfqId": { "type": "string" },

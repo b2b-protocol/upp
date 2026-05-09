@@ -6,8 +6,11 @@
   "required": ["specVersion", "id", "type", "rfqId", "vendor", "lineItems", "validUntil", "currency"],
   "properties": {
     "specVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
     "id": { "type": "string" },
     "type": { "const": "Quote" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
     "rfqId": { "type": "string" },
     "vendor": { "$ref": "#/$defs/party" },
     "currency": { "type": "string" },

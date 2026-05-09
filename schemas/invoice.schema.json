@@ -6,8 +6,11 @@
   "required": ["specVersion", "id", "type", "invoiceNumber", "buyer", "vendor", "currency", "lineItems", "matchStatus"],
   "properties": {
     "specVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
     "id": { "type": "string" },
     "type": { "const": "Invoice" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
     "invoiceNumber": { "type": "string" },
     "buyer": { "$ref": "#/$defs/party" },
     "vendor": { "$ref": "#/$defs/party" },

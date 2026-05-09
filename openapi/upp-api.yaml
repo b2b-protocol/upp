@@ -4,8 +4,8 @@ info:
   version: 0.1.0-draft
   summary: Draft HTTP API for the Universal Procurement Protocol.
   description: >
-    This API draft covers minimal capability discovery and the core RFQ, quote,
-    purchase order, invoice, and approval workflows for UPP.
+    This API draft covers capability discovery plus the initial RFQ, quote,
+    purchase order, invoice, and approval resources for UPP.
 servers:
   - url: https://api.vendor.example.com
 paths:
@@ -39,6 +39,23 @@ paths:
       responses:
         "201":
           description: RFQ accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RFQ"
+  /rfqs/{rfqId}:
+    get:
+      summary: Fetch RFQ
+      operationId: getRfq
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: RFQ
           content:
             application/json:
               schema:
@@ -168,6 +185,21 @@ components:
         discountPercent:
           type: number
           minimum: 0
+    Envelope:
+      type: object
+      properties:
+        specVersion:
+          type: string
+        schemaVersion:
+          type: string
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     Extensions:
       type: object
       propertyNames:
@@ -177,12 +209,20 @@ components:
       type: object
       required: [specVersion, id, type, vendor, supportedModules, endpoints]
       properties:
+        schemaVersion:
+          type: string
         specVersion:
           type: string
         id:
           type: string
         type:
           const: CapabilityDocument
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         vendor:
           $ref: "#/components/schemas/Party"
         supportedModules:
@@ -233,10 +273,18 @@ components:
       properties:
         specVersion:
           type: string
+        schemaVersion:
+          type: string
         id:
           type: string
         type:
           const: RFQ
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         buyer:
           $ref: "#/components/schemas/Party"
         vendor:
@@ -260,10 +308,18 @@ components:
       properties:
         specVersion:
           type: string
+        schemaVersion:
+          type: string
         id:
           type: string
         type:
           const: Quote
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         rfqId:
           type: string
         vendor:
@@ -305,10 +361,18 @@ components:
       properties:
         specVersion:
           type: string
+        schemaVersion:
+          type: string
         id:
           type: string
         type:
           const: ApprovalStatus
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         resourceType:
           type: string
         resourceId:
@@ -325,10 +389,18 @@ components:
       properties:
         specVersion:
           type: string
+        schemaVersion:
+          type: string
         id:
           type: string
         type:
           const: PurchaseOrder
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         buyer:
           $ref: "#/components/schemas/Party"
         vendor:
@@ -377,10 +449,18 @@ components:
       properties:
         specVersion:
           type: string
+        schemaVersion:
+          type: string
         id:
           type: string
         type:
           const: Invoice
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
         invoiceNumber:
           type: string
         buyer:

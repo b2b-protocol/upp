@@ -8,11 +8,22 @@
     "specVersion": {
       "type": "string"
     },
+    "schemaVersion": {
+      "type": "string"
+    },
     "id": {
       "type": "string"
     },
     "type": {
       "const": "CapabilityDocument"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
     },
     "vendor": {
       "$ref": "#/$defs/party"

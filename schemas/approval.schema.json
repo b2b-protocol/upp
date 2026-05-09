@@ -6,8 +6,11 @@
   "required": ["specVersion", "id", "type", "resourceType", "resourceId", "state"],
   "properties": {
     "specVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
     "id": { "type": "string" },
     "type": { "const": "ApprovalStatus" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "updatedAt": { "type": "string", "format": "date-time" },
     "resourceType": {
       "enum": ["RFQ", "Quote", "PurchaseOrder", "Invoice"]
     },
