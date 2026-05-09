@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/vendor-capabilities.schema.json",
+  "title": "UPP Vendor Capability Document",
+  "type": "object",
+  "required": ["specVersion", "id", "type", "vendor", "supportedModules", "endpoints"],
+  "properties": {
+    "specVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "const": "CapabilityDocument"
+    },
+    "vendor": {
+      "$ref": "#/$defs/party"
+    },
+    "supportedModules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "enum": ["oauth2", "apiKey", "mtls"]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "endpoints": {
+      "type": "object",
+      "required": ["rfq", "purchaseOrders", "invoices"],
+      "properties": {
+        "rfq": { "type": "string", "format": "uri-reference" },
+        "purchaseOrders": { "type": "string", "format": "uri-reference" },
+        "invoices": { "type": "string", "format": "uri-reference" },
+        "approvals": { "type": "string", "format": "uri-reference" }
+      },
+      "additionalProperties": false
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "currencies": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "quoteValidityDays": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

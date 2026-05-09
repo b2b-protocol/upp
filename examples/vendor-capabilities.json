@@ -1,0 +1,41 @@
+{
+  "specVersion": "0.1.0-draft",
+  "id": "cap_vendor_acme_001",
+  "type": "CapabilityDocument",
+  "vendor": {
+    "id": "vendor_acme_industrial",
+    "name": "Acme Industrial Supply",
+    "contactEmail": "integrations@acme.example",
+    "externalIds": {
+      "erpVendorId": "ACME-2041"
+    }
+  },
+  "supportedModules": [
+    "UPP Core",
+    "UPP Capabilities",
+    "UPP RFQ",
+    "UPP Orders",
+    "UPP Invoice",
+    "UPP Identity",
+    "UPP Extensions"
+  ],
+  "auth": {
+    "methods": ["oauth2", "apiKey"]
+  },
+  "endpoints": {
+    "rfq": "/rfqs",
+    "purchaseOrders": "/purchase-orders",
+    "invoices": "/invoices",
+    "approvals": "/approvals/{approvalId}"
+  },
+  "constraints": {
+    "currencies": ["USD", "EUR"],
+    "quoteValidityDays": 14,
+    "approvalRequiredForPurchaseOrdersAbove": 10000
+  },
+  "extensions": {
+    "com.vendorname.custom_pricing": {
+      "supportsTierPricing": true
+    }
+  }
+}

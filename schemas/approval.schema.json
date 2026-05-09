@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/approval.schema.json",
+  "title": "UPP Approval Status",
+  "type": "object",
+  "required": ["specVersion", "id", "type", "resourceType", "resourceId", "state"],
+  "properties": {
+    "specVersion": { "type": "string" },
+    "id": { "type": "string" },
+    "type": { "const": "ApprovalStatus" },
+    "resourceType": {
+      "enum": ["RFQ", "Quote", "PurchaseOrder", "Invoice"]
+    },
+    "resourceId": { "type": "string" },
+    "state": {
+      "enum": ["not_required", "pending", "approved", "rejected"]
+    },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "approver": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "reason": { "type": "string" },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

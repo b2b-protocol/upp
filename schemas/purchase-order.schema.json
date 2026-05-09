@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/purchase-order.schema.json",
+  "title": "UPP Purchase Order",
+  "type": "object",
+  "required": ["specVersion", "id", "type", "buyer", "vendor", "lineItems", "status", "currency"],
+  "properties": {
+    "specVersion": { "type": "string" },
+    "id": { "type": "string" },
+    "type": { "const": "PurchaseOrder" },
+    "buyer": { "$ref": "#/$defs/party" },
+    "vendor": { "$ref": "#/$defs/party" },
+    "rfqId": { "type": "string" },
+    "quoteId": { "type": "string" },
+    "status": {
+      "enum": ["draft", "submitted", "accepted", "rejected", "partially_fulfilled", "fulfilled", "cancelled"]
+    },
+    "currency": { "type": "string" },
+    "paymentTerms": { "$ref": "#/$defs/paymentTerms" },
+    "approvalStatus": { "$ref": "#/$defs/approvalStatus" },
+    "lineItems": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/poLineItem" },
+      "minItems": 1
+    },
+    "totals": {
+      "type": "object",
+      "properties": {
+        "subtotal": { "type": "number", "minimum": 0 },
+        "tax": { "type": "number", "minimum": 0 },
+        "total": { "type": "number", "minimum": 0 }
+      },
+      "required": ["total"],
+      "additionalProperties": false
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "paymentTerms": {
+      "type": "object",
+      "properties": {
+        "code": { "type": "string" },
+        "dueDays": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "approvalStatus": {
+      "type": "object",
+      "properties": {
+        "state": { "enum": ["not_required", "pending", "approved", "rejected"] },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["state"],
+      "additionalProperties": true
+    },
+    "poLineItem": {
+      "type": "object",
+      "required": ["id", "description", "quantity", "unit", "unitPrice"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "quantity": { "type": "number", "exclusiveMinimum": 0 },
+        "unit": { "type": "string" },
+        "unitPrice": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": true
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

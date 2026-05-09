@@ -1,0 +1,129 @@
+{
+  "workflow": [
+    {
+      "type": "RFQ",
+      "id": "rfq_1001",
+      "buyer": {
+        "id": "buyer_globex",
+        "name": "Globex Procurement"
+      },
+      "vendor": {
+        "id": "vendor_acme_industrial",
+        "name": "Acme Industrial Supply"
+      },
+      "currency": "USD",
+      "responseDueAt": "2026-05-15T17:00:00Z",
+      "lineItems": [
+        {
+          "id": "line_1",
+          "description": "Industrial sensors",
+          "quantity": 250,
+          "unit": "each",
+          "targetUnitPrice": 42.5
+        }
+      ]
+    },
+    {
+      "type": "Quote",
+      "id": "quote_1001",
+      "rfqId": "rfq_1001",
+      "vendor": {
+        "id": "vendor_acme_industrial",
+        "name": "Acme Industrial Supply"
+      },
+      "currency": "USD",
+      "validUntil": "2026-05-22T17:00:00Z",
+      "paymentTerms": {
+        "code": "NET_30",
+        "dueDays": 30
+      },
+      "lineItems": [
+        {
+          "rfqLineItemId": "line_1",
+          "quantity": 250,
+          "unitPrice": 40.75,
+          "leadTimeDays": 10
+        }
+      ],
+      "totals": {
+        "subtotal": 10187.5,
+        "tax": 0,
+        "total": 10187.5
+      }
+    },
+    {
+      "type": "PurchaseOrder",
+      "id": "po_1001",
+      "buyer": {
+        "id": "buyer_globex",
+        "name": "Globex Procurement"
+      },
+      "vendor": {
+        "id": "vendor_acme_industrial",
+        "name": "Acme Industrial Supply"
+      },
+      "rfqId": "rfq_1001",
+      "quoteId": "quote_1001",
+      "status": "submitted",
+      "currency": "USD",
+      "approvalStatus": {
+        "state": "approved",
+        "updatedAt": "2026-05-16T09:30:00Z"
+      },
+      "paymentTerms": {
+        "code": "NET_30",
+        "dueDays": 30
+      },
+      "lineItems": [
+        {
+          "id": "line_1",
+          "description": "Industrial sensors",
+          "quantity": 250,
+          "unit": "each",
+          "unitPrice": 40.75
+        }
+      ],
+      "totals": {
+        "subtotal": 10187.5,
+        "tax": 0,
+        "total": 10187.5
+      }
+    },
+    {
+      "type": "Invoice",
+      "id": "inv_1001",
+      "invoiceNumber": "INV-2026-1001",
+      "buyer": {
+        "id": "buyer_globex",
+        "name": "Globex Procurement"
+      },
+      "vendor": {
+        "id": "vendor_acme_industrial",
+        "name": "Acme Industrial Supply"
+      },
+      "purchaseOrderId": "po_1001",
+      "quoteId": "quote_1001",
+      "currency": "USD",
+      "issuedAt": "2026-05-28T10:00:00Z",
+      "dueAt": "2026-06-27T10:00:00Z",
+      "paymentTerms": {
+        "code": "NET_30",
+        "dueDays": 30
+      },
+      "matchStatus": "matched",
+      "lineItems": [
+        {
+          "id": "line_1",
+          "description": "Industrial sensors",
+          "quantity": 250,
+          "unitPrice": 40.75
+        }
+      ],
+      "totals": {
+        "subtotal": 10187.5,
+        "tax": 0,
+        "total": 10187.5
+      }
+    }
+  ]
+}
