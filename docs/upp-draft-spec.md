@@ -29,7 +29,7 @@ This draft does not attempt to replace EDI, standardize every procurement docume
 
 ## 3. Object envelope
 
-All top-level UPP objects should include:
+All top-level UPP objects include a shared envelope:
 
 ```json
 {
@@ -126,8 +126,8 @@ Namespaced custom fields.
 
 - Unknown optional fields must not break processing.
 - Unknown required extensions must fail fast with a clear error.
-- Implementations should support idempotency for mutating operations.
-- Implementations should expose a stable capability discovery URL.
+- Mutating operations should support idempotency.
+- Capability discovery should be exposed at a stable URL.
 
 ## 7. Example extension keys
 
@@ -144,12 +144,10 @@ Namespaced custom fields.
 
 ## 9. Implementation note
 
-UPP should be easy to map into:
+UPP is intended to map cleanly into:
 
 - ERP adapters
 - procurement suites
 - API gateways
 - EDI translation layers
 - marketplace integrations
-
-The protocol is successful if it reduces integration work, not if it becomes academically complete.
