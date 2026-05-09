@@ -1,0 +1,18 @@
+site_name: UPP
+site_description: Universal Procurement Protocol documentation
+docs_dir: docs
+nav:
+  - Overview: index.md
+  - Introduction: introduction.md
+  - Architecture: architecture.md
+  - Core Concepts: core-concepts.md
+  - Specification: upp-draft-spec.md
+  - Capability Discovery: capability-discovery.md
+  - RFQ: rfq.md
+  - Purchase Orders: purchase-orders.md
+  - Invoices: invoices.md
+  - Identity: identity.md
+  - Extensions: extensions.md
+  - Security: security.md
+  - Roadmap: roadmap.md
+  - Research Notes: research-notes.md
