@@ -1,8 +1,8 @@
 # RFQ
 
-The RFQ module standardizes request-for-quote exchange.
+The RFQ module defines request-for-quote exchange between buyers and vendors.
 
-An `RFQ` should contain:
+An `RFQ` typically includes:
 
 - buyer identity
 - requested items or service lines
@@ -14,7 +14,7 @@ An `RFQ` should contain:
 - optional attachments or references
 - optional extensions
 
-A `Quote` should contain:
+A `Quote` typically includes:
 
 - vendor identity
 - quote reference
@@ -26,6 +26,4 @@ A `Quote` should contain:
 - assumptions, exclusions, or notes
 - optional extensions
 
-## Goal
-
-The goal is not to model every procurement edge case up front. The goal is to let a buyer-side agent obtain a structured quote without a custom adapter for every vendor.
+The first draft keeps the RFQ and quote model intentionally small so implementations can exchange structured pricing and fulfillment terms without partner-specific adapters for basic flows.

@@ -11,7 +11,7 @@ Each party has a stable identifier, display name, contact metadata, and optional
 
 ## Capability Document
 
-A `CapabilityDocument` is the entry point for discovery. It tells clients:
+A `CapabilityDocument` is the entry point for discovery. It describes:
 
 - which UPP modules are supported
 - which API endpoints are available
@@ -33,7 +33,7 @@ The initial protocol defines these workflow objects:
 
 ## Extension model
 
-Every extension must use a namespace, for example:
+Extensions use namespaced keys, for example:
 
 - `com.b2bprotocol.procurement.rfq`
 - `com.b2bprotocol.procurement.purchase_order`
@@ -43,9 +43,9 @@ Unknown extensions must be safely ignored unless explicitly marked as required.
 
 ## Versioning
 
-Each object carries:
+Each object carries version information:
 
 - `specVersion`: the UPP version
 - `schemaVersion`: the schema release when applicable
 
-Breaking schema changes must increment the major version.
+Breaking changes should increment the major version.

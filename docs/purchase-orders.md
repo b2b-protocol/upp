@@ -1,8 +1,8 @@
 # Purchase Orders
 
-The purchase order module standardizes order submission after quote acceptance or direct purchase intent.
+The purchase order module defines order submission after quote acceptance or direct purchase intent.
 
-A `PurchaseOrder` should contain:
+A `PurchaseOrder` typically includes:
 
 - buyer and vendor identifiers
 - optional source RFQ or quote references
@@ -16,7 +16,7 @@ A `PurchaseOrder` should contain:
 
 ## Lifecycle
 
-Recommended first-pass statuses:
+The initial draft uses these statuses:
 
 - `draft`
 - `submitted`
@@ -28,4 +28,4 @@ Recommended first-pass statuses:
 
 ## Interoperability rule
 
-If a vendor must convert UPP purchase orders into EDI, ERP-native payloads, or partner-specific APIs, that translation should happen behind the vendor boundary without changing the UPP-facing contract.
+Vendors may translate UPP purchase orders into EDI, ERP-native payloads, or partner-specific APIs behind their own integration boundary without changing the external UPP contract.

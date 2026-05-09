@@ -2,7 +2,7 @@
 
 The invoice module supports structured invoice exchange and matching.
 
-An `Invoice` should contain:
+An `Invoice` typically includes:
 
 - invoice identifier
 - buyer and vendor identifiers
@@ -17,10 +17,8 @@ An `Invoice` should contain:
 
 ## Matching
 
-The initial protocol should support at least a lightweight matching model:
+The initial draft uses a lightweight matching model:
 
 - `matched`
 - `mismatch`
 - `pending_review`
-
-This keeps the first version implementation-friendly while leaving room for richer three-way match logic later.

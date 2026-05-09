@@ -1,6 +1,6 @@
 # Extensions
 
-UPP uses namespaced extensions so implementers can move faster without fragmenting the base protocol.
+UPP uses namespaced extensions to support partner-specific or domain-specific data without changing the base protocol.
 
 ## Rules
 
@@ -17,7 +17,7 @@ UPP uses namespaced extensions so implementers can move faster without fragmenti
 
 ## Design intent
 
-Extensions are for edge logic such as:
+Extensions can be used for:
 
 - custom pricing rules
 - procurement policy metadata

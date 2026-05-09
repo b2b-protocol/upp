@@ -1,8 +1,8 @@
 # Identity
 
-Identity in UPP is practical and enterprise-oriented.
+The identity model in UPP is intended to support practical enterprise integrations.
 
-The protocol needs enough identity structure to let systems safely determine:
+It provides enough structure for systems to determine:
 
 - who the buyer is
 - who the vendor is
@@ -22,7 +22,7 @@ The protocol needs enough identity structure to let systems safely determine:
 
 ## Authentication
 
-UPP should work with standard enterprise auth patterns such as:
+UPP is designed to work with common enterprise authentication patterns such as:
 
 - OAuth 2.0
 - API keys for server-to-server integrations
