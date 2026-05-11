@@ -2,7 +2,10 @@
   "workflow": [
     {
       "type": "RFQ",
+      "specVersion": "0.2.0-draft",
       "id": "rfq_1001",
+      "intentId": "intent_1001",
+      "discoveryResponseId": "response_1001",
       "buyer": {
         "id": "buyer_globex",
         "name": "Globex Procurement"
@@ -25,6 +28,7 @@
     },
     {
       "type": "Quote",
+      "specVersion": "0.2.0-draft",
       "id": "quote_1001",
       "rfqId": "rfq_1001",
       "vendor": {
@@ -53,6 +57,7 @@
     },
     {
       "type": "PurchaseOrder",
+      "specVersion": "0.2.0-draft",
       "id": "po_1001",
       "buyer": {
         "id": "buyer_globex",
@@ -62,6 +67,7 @@
         "id": "vendor_acme_industrial",
         "name": "Acme Industrial Supply"
       },
+      "intentId": "intent_1001",
       "rfqId": "rfq_1001",
       "quoteId": "quote_1001",
       "status": "submitted",
@@ -91,6 +97,7 @@
     },
     {
       "type": "Invoice",
+      "specVersion": "0.2.0-draft",
       "id": "inv_1001",
       "invoiceNumber": "INV-2026-1001",
       "buyer": {

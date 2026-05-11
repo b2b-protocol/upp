@@ -5,9 +5,9 @@ UPP uses namespaced extensions to support partner-specific or domain-specific da
 ## Rules
 
 - Every extension key must be namespaced.
-- Base objects must remain valid without vendor extensions unless the capability document says otherwise.
+- Base objects must remain valid without vendor extensions unless the capability profile says otherwise.
 - Unknown optional extensions should be ignored safely.
-- Required extensions must be declared in the capability document.
+- Required extensions must be declared in the capability profile.
 
 ## Examples
 

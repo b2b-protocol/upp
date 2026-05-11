@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/capability-profile.schema.json",
+  "title": "UPP Capability Profile",
+  "type": "object",
+  "required": ["specVersion", "id", "type", "vendor", "services", "capabilities", "endpoints"],
+  "properties": {
+    "specVersion": {
+      "type": "string"
+    },
+    "schemaVersion": {
+      "type": "string"
+    },
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "const": "CapabilityProfile"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "supportedVersions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}(-[a-z0-9.-]+)?$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri-reference"
+      }
+    },
+    "vendor": {
+      "$ref": "#/$defs/party"
+    },
+    "services": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": {
+        "type": "array",
+        "minItems": 1,
+        "items": {
+          "$ref": "#/$defs/service"
+        }
+      }
+    },
+    "supportedModules": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/capability"
+      }
+    },
+    "auth": {
+      "type": "object",
+      "properties": {
+        "methods": {
+          "type": "array",
+          "items": {
+            "enum": ["oauth2", "apiKey", "mtls", "http-signatures"]
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "signingKeys": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/signingKey"
+      }
+    },
+    "endpoints": {
+      "type": "object",
+      "required": ["profile", "rfq", "purchaseOrders", "invoices"],
+      "properties": {
+        "profile": { "type": "string", "format": "uri-reference" },
+        "discovery": { "type": "string", "format": "uri-reference" },
+        "rfq": { "type": "string", "format": "uri-reference" },
+        "purchaseOrders": { "type": "string", "format": "uri-reference" },
+        "invoices": { "type": "string", "format": "uri-reference" },
+        "approvals": { "type": "string", "format": "uri-reference" }
+      },
+      "additionalProperties": false
+    },
+    "bindings": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/binding"
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "currencies": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "quoteValidityDays": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": true
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions"
+    }
+  },
+  "$defs": {
+    "capability": {
+      "type": "object",
+      "required": ["name", "version", "spec", "schema"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "version": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "schema": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "module": {
+          "type": "string"
+        },
+        "extends": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "service": {
+      "type": "object",
+      "required": ["version", "spec", "transport"],
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "spec": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "schema": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "id": {
+          "type": "string"
+        },
+        "config": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "transport": {
+          "enum": ["rest", "mcp", "a2a", "embedded", "events"]
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri-reference"
+        }
+      },
+      "additionalProperties": false
+    },
+    "binding": {
+      "type": "object",
+      "required": ["kind", "version"],
+      "properties": {
+        "kind": {
+          "enum": ["rest", "mcp", "a2a", "events"]
+        },
+        "version": {
+          "type": "string"
+        },
+        "endpoint": {
+          "type": "string",
+          "format": "uri-reference"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "signingKey": {
+      "type": "object",
+      "required": ["kid", "kty"],
+      "properties": {
+        "kid": {
+          "type": "string"
+        },
+        "kty": {
+          "type": "string"
+        },
+        "crv": {
+          "type": "string",
+          "enum": ["P-256", "P-384"]
+        },
+        "x": {
+          "type": "string"
+        },
+        "y": {
+          "type": "string"
+        },
+        "use": {
+          "type": "string",
+          "enum": ["sig"]
+        },
+        "alg": {
+          "type": "string",
+          "enum": ["ES256", "ES384"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "party": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

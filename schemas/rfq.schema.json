@@ -7,14 +7,54 @@
   "properties": {
     "specVersion": { "type": "string" },
     "schemaVersion": { "type": "string" },
-    "id": { "type": "string" },
-    "type": { "const": "RFQ" },
-    "createdAt": { "type": "string", "format": "date-time" },
-    "updatedAt": { "type": "string", "format": "date-time" },
+    "id": {
+      "type": "string",
+      "upp_request": {
+        "create": "omit",
+        "update": "required"
+      },
+      "upp_response": "required"
+    },
+    "type": {
+      "const": "RFQ",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "intentId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "discoveryResponseId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
     "buyer": { "$ref": "#/$defs/party" },
     "vendor": { "$ref": "#/$defs/party" },
-    "currency": { "type": "string" },
-    "responseDueAt": { "type": "string", "format": "date-time" },
+    "currency": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "responseDueAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
     "deliveryLocation": {
       "type": "object",
       "properties": {
@@ -24,13 +64,23 @@
       "required": ["country"],
       "additionalProperties": true
     },
-    "paymentTerms": { "$ref": "#/$defs/paymentTerms" },
+    "paymentTerms": {
+      "$ref": "#/$defs/paymentTerms",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
     "lineItems": {
       "type": "array",
       "minItems": 1,
-      "items": { "$ref": "#/$defs/lineItem" }
+      "items": { "$ref": "#/$defs/lineItem" },
+      "upp_request": "required",
+      "upp_response": "required"
     },
-    "extensions": { "$ref": "#/$defs/extensions" }
+    "extensions": {
+      "$ref": "#/$defs/extensions",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    }
   },
   "$defs": {
     "party": {

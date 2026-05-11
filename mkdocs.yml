@@ -7,7 +7,15 @@ nav:
   - Architecture: architecture.md
   - Core Concepts: core-concepts.md
   - Specification: upp-draft-spec.md
+  - Discovery: discovery.md
   - Capability Discovery: capability-discovery.md
+  - Capabilities: capabilities.md
+  - Transports: transports.md
+  - MCP Binding: mcp-binding.md
+  - Schema Tooling: schema-tooling.md
+  - Reference Implementation: reference-implementation.md
+  - Conformance: conformance.md
+  - Signatures: signatures.md
   - RFQ: rfq.md
   - Purchase Orders: purchase-orders.md
   - Invoices: invoices.md

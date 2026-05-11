@@ -1,0 +1,149 @@
+{
+  "workflow": [
+    {
+      "type": "SourceArtifact",
+      "specVersion": "0.2.0-draft",
+      "id": "doc_1001",
+      "filename": "factory-sensor-upgrade-spec.pdf",
+      "mediaType": "application/pdf",
+      "contentHash": "sha256:9f2d9ea2e4e4b07b7a6d3cc38c4a972dbeb4a39f11df7aa92f1db5d7a1f58f11",
+      "sourceSystem": "project-intake-portal",
+      "pageCount": 18
+    },
+    {
+      "type": "Intent",
+      "specVersion": "0.2.0-draft",
+      "id": "intent_1001",
+      "buyer": {
+        "id": "buyer_globex",
+        "name": "Globex Procurement",
+        "contactEmail": "procurement@globex.example"
+      },
+      "sourceArtifactIds": ["doc_1001"],
+      "title": "Factory sensor upgrade package",
+      "summary": "Upgrade the existing sensor network in the Eindhoven plant and deliver installation-ready industrial sensors.",
+      "category": "industrial-automation",
+      "deliveryLocation": "Eindhoven, NL",
+      "budgetAmount": 12000,
+      "budgetCurrency": "EUR",
+      "responseDueAt": "2026-05-20T15:00:00Z",
+      "deliverables": [
+        {
+          "id": "deliverable_1",
+          "description": "Industrial sensors with installation accessories",
+          "quantity": 250,
+          "unit": "each",
+          "targetDate": "2026-06-15T00:00:00Z"
+        }
+      ],
+      "constraints": [
+        {
+          "kind": "region",
+          "operator": "equals",
+          "value": "EU",
+          "strength": "required"
+        },
+        {
+          "kind": "leadTimeDays",
+          "operator": "lte",
+          "value": 21,
+          "strength": "required"
+        },
+        {
+          "kind": "budgetAmount",
+          "operator": "lte",
+          "value": 12000,
+          "strength": "preferred"
+        }
+      ]
+    },
+    {
+      "type": "DiscoveryRequest",
+      "specVersion": "0.2.0-draft",
+      "id": "query_1001",
+      "intentId": "intent_1001",
+      "buyer": {
+        "id": "buyer_globex",
+        "name": "Globex Procurement"
+      },
+      "requestedModules": ["UPP Discovery", "UPP RFQ"],
+      "constraints": [
+        {
+          "kind": "region",
+          "operator": "equals",
+          "value": "EU",
+          "strength": "required"
+        },
+        {
+          "kind": "leadTimeDays",
+          "operator": "lte",
+          "value": 21,
+          "strength": "required"
+        }
+      ]
+    },
+    {
+      "type": "DiscoveryResponse",
+      "specVersion": "0.2.0-draft",
+      "id": "response_1001",
+      "requestId": "query_1001",
+      "matches": [
+        {
+          "supplier": {
+            "id": "vendor_acme_industrial",
+            "name": "Acme Industrial Supply",
+            "contactEmail": "integrations@acme.example"
+          },
+          "offering": {
+            "id": "offering_acme_sensors",
+            "supplier": {
+              "id": "vendor_acme_industrial",
+              "name": "Acme Industrial Supply"
+            },
+            "title": "Industrial sensor deployment package",
+            "summary": "Supply of industrial sensors for retrofit and modernization projects.",
+            "categories": ["industrial-automation", "sensors"],
+            "deliverables": [
+              {
+                "id": "offering_deliverable_1",
+                "description": "Industrial sensors with accessories",
+                "quantity": 250,
+                "unit": "each"
+              }
+            ],
+            "serviceRegions": ["EU", "EEA"]
+          },
+          "fitScore": 0.93,
+          "bindingState": {
+            "state": "indicative",
+            "binding": "non_binding",
+            "notes": "Discovery result is informative only and not yet a commercial commitment."
+          },
+          "availableActions": [
+            {
+              "type": "send_rfq",
+              "label": "Send RFQ to supplier",
+              "targetType": "Offering",
+              "targetId": "offering_acme_sensors",
+              "requiresApproval": true
+            },
+            {
+              "type": "request_clarification",
+              "label": "Ask supplier for installation lead-time details",
+              "targetType": "Offering",
+              "targetId": "offering_acme_sensors",
+              "requiresApproval": false
+            }
+          ],
+          "explanations": [
+            {
+              "code": "category_match",
+              "summary": "Supplier offering matches industrial automation sensor demand.",
+              "matchedFields": ["category", "deliverables", "region"]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

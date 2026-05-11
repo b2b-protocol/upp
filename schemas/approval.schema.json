@@ -7,18 +7,46 @@
   "properties": {
     "specVersion": { "type": "string" },
     "schemaVersion": { "type": "string" },
-    "id": { "type": "string" },
-    "type": { "const": "ApprovalStatus" },
-    "createdAt": { "type": "string", "format": "date-time" },
-    "updatedAt": { "type": "string", "format": "date-time" },
+    "id": {
+      "type": "string",
+      "upp_request": {
+        "create": "omit",
+        "update": "required"
+      },
+      "upp_response": "required"
+    },
+    "type": {
+      "const": "ApprovalStatus",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "optional",
+      "upp_response": "required"
+    },
     "resourceType": {
-      "enum": ["RFQ", "Quote", "PurchaseOrder", "Invoice"]
+      "enum": ["RFQ", "Quote", "PurchaseOrder", "Invoice"],
+      "upp_request": "required",
+      "upp_response": "required"
     },
-    "resourceId": { "type": "string" },
+    "resourceId": {
+      "type": "string",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
     "state": {
-      "enum": ["not_required", "pending", "approved", "rejected"]
+      "enum": ["not_required", "pending", "approved", "rejected"],
+      "upp_request": "optional",
+      "upp_response": "required"
     },
-    "updatedAt": { "type": "string", "format": "date-time" },
     "approver": {
       "type": "object",
       "properties": {

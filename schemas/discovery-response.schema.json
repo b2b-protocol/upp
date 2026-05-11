@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/discovery-response.schema.json",
+  "title": "UPP Discovery Response",
+  "type": "object",
+  "required": ["specVersion", "id", "type", "requestId", "matches"],
+  "properties": {
+    "specVersion": { "type": "string" },
+    "schemaVersion": { "type": "string" },
+    "id": {
+      "type": "string",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "type": {
+      "const": "DiscoveryResponse",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "requestId": {
+      "type": "string",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "matches": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/discoveryMatch" },
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "extensions": {
+      "$ref": "#/$defs/extensions",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "deliverable": {
+      "type": "object",
+      "required": ["id", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "quantity": { "type": "number", "exclusiveMinimum": 0 },
+        "unit": { "type": "string" },
+        "targetDate": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["kind", "operator", "value", "strength"],
+      "properties": {
+        "kind": { "type": "string" },
+        "operator": {
+          "enum": ["equals", "in", "gte", "lte", "contains"]
+        },
+        "value": true,
+        "strength": {
+          "enum": ["required", "preferred"]
+        },
+        "rationale": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "offering": {
+      "type": "object",
+      "required": ["id", "supplier", "title"],
+      "properties": {
+        "id": { "type": "string" },
+        "supplier": { "$ref": "#/$defs/party" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "categories": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "deliverables": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/deliverable" }
+        },
+        "serviceRegions": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/constraint" }
+        },
+        "extensions": { "$ref": "#/$defs/extensions" }
+      },
+      "additionalProperties": false
+    },
+    "matchReason": {
+      "type": "object",
+      "required": ["code", "summary"],
+      "properties": {
+        "code": { "type": "string" },
+        "summary": { "type": "string" },
+        "matchedFields": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unmetConstraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "availableAction": {
+      "type": "object",
+      "required": ["type", "label", "targetType", "requiresApproval"],
+      "properties": {
+        "type": {
+          "enum": [
+            "send_rfq",
+            "request_clarification",
+            "open_review",
+            "submit_order"
+          ]
+        },
+        "label": {
+          "type": "string"
+        },
+        "targetType": {
+          "enum": [
+            "Offering",
+            "DiscoveryResponse",
+            "RFQ",
+            "PurchaseOrder"
+          ]
+        },
+        "targetId": {
+          "type": "string"
+        },
+        "requiresApproval": {
+          "type": "boolean"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "bindingState": {
+      "type": "object",
+      "required": ["state", "binding"],
+      "properties": {
+        "state": {
+          "enum": [
+            "exploratory",
+            "indicative",
+            "quoted",
+            "approved",
+            "committed"
+          ]
+        },
+        "binding": {
+          "enum": ["non_binding", "binding"]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "discoveryMatch": {
+      "type": "object",
+      "required": ["supplier", "offering", "fitScore"],
+      "properties": {
+        "supplier": { "$ref": "#/$defs/party" },
+        "offering": { "$ref": "#/$defs/offering" },
+        "fitScore": { "type": "number", "minimum": 0 },
+        "bindingState": { "$ref": "#/$defs/bindingState" },
+        "availableActions": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/availableAction" }
+        },
+        "explanations": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/matchReason" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

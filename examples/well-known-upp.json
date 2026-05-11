@@ -1,7 +1,12 @@
 {
   "specVersion": "0.2.0-draft",
-  "id": "cap_vendor_acme_001",
+  "id": "profile_vendor_acme_001",
   "type": "CapabilityProfile",
+  "createdAt": "2026-05-11T09:00:00Z",
+  "updatedAt": "2026-05-11T09:00:00Z",
+  "supportedVersions": {
+    "0.2.0-draft": "/.well-known/upp"
+  },
   "vendor": {
     "id": "vendor_acme_industrial",
     "name": "Acme Industrial Supply",
@@ -20,9 +25,6 @@
     "UPP Identity",
     "UPP Extensions"
   ],
-  "supportedVersions": {
-    "0.2.0-draft": "/.well-known/upp"
-  },
   "services": {
     "com.b2bprotocol.procurement": [
       {
@@ -107,14 +109,6 @@
       "alg": "ES256"
     }
   ],
-  "endpoints": {
-    "profile": "/.well-known/upp",
-    "discovery": "/discovery/requests",
-    "rfq": "/rfqs",
-    "purchaseOrders": "/purchase-orders",
-    "invoices": "/invoices",
-    "approvals": "/approvals/{approvalId}"
-  },
   "bindings": [
     {
       "kind": "rest",
@@ -127,6 +121,14 @@
       "endpoint": "mcp://vendor-acme-industrial"
     }
   ],
+  "endpoints": {
+    "profile": "/.well-known/upp",
+    "discovery": "/discovery/requests",
+    "rfq": "/rfqs",
+    "purchaseOrders": "/purchase-orders",
+    "invoices": "/invoices",
+    "approvals": "/approvals/{approvalId}"
+  },
   "constraints": {
     "currencies": ["USD", "EUR"],
     "quoteValidityDays": 14,

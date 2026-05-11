@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://b2bprotocol.com/schemas/offering.schema.json",
+  "title": "UPP Offering",
+  "type": "object",
+  "required": ["id", "supplier", "title"],
+  "properties": {
+    "id": { "type": "string" },
+    "supplier": { "$ref": "#/$defs/party" },
+    "title": { "type": "string" },
+    "summary": { "type": "string" },
+    "categories": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "deliverables": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/deliverable" }
+    },
+    "serviceRegions": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "constraints": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/constraint" }
+    },
+    "extensions": { "$ref": "#/$defs/extensions" }
+  },
+  "$defs": {
+    "party": {
+      "type": "object",
+      "required": ["id", "name"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "contactEmail": { "type": "string", "format": "email" },
+        "externalIds": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "deliverable": {
+      "type": "object",
+      "required": ["id", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "description": { "type": "string" },
+        "quantity": { "type": "number", "exclusiveMinimum": 0 },
+        "unit": { "type": "string" },
+        "targetDate": { "type": "string", "format": "date-time" }
+      },
+      "additionalProperties": false
+    },
+    "constraint": {
+      "type": "object",
+      "required": ["kind", "operator", "value", "strength"],
+      "properties": {
+        "kind": { "type": "string" },
+        "operator": {
+          "enum": ["equals", "in", "gte", "lte", "contains"]
+        },
+        "value": true,
+        "strength": {
+          "enum": ["required", "preferred"]
+        },
+        "rationale": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

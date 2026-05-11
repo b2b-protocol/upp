@@ -7,26 +7,81 @@
   "properties": {
     "specVersion": { "type": "string" },
     "schemaVersion": { "type": "string" },
-    "id": { "type": "string" },
-    "type": { "const": "Invoice" },
-    "createdAt": { "type": "string", "format": "date-time" },
-    "updatedAt": { "type": "string", "format": "date-time" },
-    "invoiceNumber": { "type": "string" },
+    "id": {
+      "type": "string",
+      "upp_request": {
+        "create": "omit",
+        "update": "required"
+      },
+      "upp_response": "required"
+    },
+    "type": {
+      "const": "Invoice",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "invoiceNumber": {
+      "type": "string",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
     "buyer": { "$ref": "#/$defs/party" },
     "vendor": { "$ref": "#/$defs/party" },
-    "purchaseOrderId": { "type": "string" },
-    "quoteId": { "type": "string" },
-    "currency": { "type": "string" },
-    "issuedAt": { "type": "string", "format": "date-time" },
-    "dueAt": { "type": "string", "format": "date-time" },
-    "paymentTerms": { "$ref": "#/$defs/paymentTerms" },
+    "purchaseOrderId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "quoteId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "currency": {
+      "type": "string",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "issuedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "dueAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "paymentTerms": {
+      "$ref": "#/$defs/paymentTerms",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
     "matchStatus": {
-      "enum": ["matched", "mismatch", "pending_review"]
+      "enum": ["matched", "mismatch", "pending_review"],
+      "upp_request": "optional",
+      "upp_response": "required"
     },
     "lineItems": {
       "type": "array",
       "items": { "$ref": "#/$defs/invoiceLineItem" },
-      "minItems": 1
+      "minItems": 1,
+      "upp_request": "required",
+      "upp_response": "required"
     },
     "totals": {
       "type": "object",
@@ -36,9 +91,15 @@
         "total": { "type": "number", "minimum": 0 }
       },
       "required": ["total"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "upp_request": "optional",
+      "upp_response": "optional"
     },
-    "extensions": { "$ref": "#/$defs/extensions" }
+    "extensions": {
+      "$ref": "#/$defs/extensions",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    }
   },
   "$defs": {
     "party": {

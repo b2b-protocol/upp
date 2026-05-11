@@ -7,19 +7,79 @@
   "properties": {
     "specVersion": { "type": "string" },
     "schemaVersion": { "type": "string" },
-    "id": { "type": "string" },
-    "type": { "const": "Quote" },
-    "createdAt": { "type": "string", "format": "date-time" },
-    "updatedAt": { "type": "string", "format": "date-time" },
-    "rfqId": { "type": "string" },
+    "id": {
+      "type": "string",
+      "upp_request": {
+        "create": "omit",
+        "update": "required"
+      },
+      "upp_response": "required"
+    },
+    "type": {
+      "const": "Quote",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "omit",
+      "upp_response": "required"
+    },
+    "intentId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "discoveryResponseId": {
+      "type": "string",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "rfqId": {
+      "type": "string",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "buyer": {
+      "$ref": "#/$defs/party",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
     "vendor": { "$ref": "#/$defs/party" },
-    "currency": { "type": "string" },
-    "validUntil": { "type": "string", "format": "date-time" },
-    "paymentTerms": { "$ref": "#/$defs/paymentTerms" },
+    "currency": {
+      "type": "string",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "validUntil": {
+      "type": "string",
+      "format": "date-time",
+      "upp_request": "required",
+      "upp_response": "required"
+    },
+    "bindingState": {
+      "$ref": "#/$defs/bindingState",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
+    "paymentTerms": {
+      "$ref": "#/$defs/paymentTerms",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    },
     "lineItems": {
       "type": "array",
       "items": { "$ref": "#/$defs/quotedLineItem" },
-      "minItems": 1
+      "minItems": 1,
+      "upp_request": "required",
+      "upp_response": "required"
     },
     "totals": {
       "type": "object",
@@ -29,9 +89,15 @@
         "total": { "type": "number", "minimum": 0 }
       },
       "required": ["total"],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "upp_request": "optional",
+      "upp_response": "optional"
     },
-    "extensions": { "$ref": "#/$defs/extensions" }
+    "extensions": {
+      "$ref": "#/$defs/extensions",
+      "upp_request": "optional",
+      "upp_response": "optional"
+    }
   },
   "$defs": {
     "party": {
@@ -61,6 +127,28 @@
         "dueDays": { "type": "integer", "minimum": 0 }
       },
       "additionalProperties": true
+    },
+    "bindingState": {
+      "type": "object",
+      "required": ["state", "binding"],
+      "properties": {
+        "state": {
+          "enum": [
+            "exploratory",
+            "indicative",
+            "quoted",
+            "approved",
+            "committed"
+          ]
+        },
+        "binding": {
+          "enum": ["non_binding", "binding"]
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "extensions": {
       "type": "object",

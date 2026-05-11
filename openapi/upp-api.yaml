@@ -1,25 +1,128 @@
 openapi: 3.1.0
 info:
   title: UPP API
-  version: 0.1.0-draft
-  summary: Draft HTTP API for the Universal Procurement Protocol.
+  version: 0.2.0-draft
+  summary: Draft HTTP transport binding for the Universal Procurement Protocol.
   description: >
-    This API draft covers capability discovery plus the initial RFQ, quote,
-    purchase order, invoice, and approval resources for UPP.
+    This OpenAPI document is a transport binding for UPP. Following the UCP
+    baseline pattern, transport definitions reference canonical base schemas
+    from the schema registry rather than redefining payload shapes inline.
 servers:
   - url: https://api.vendor.example.com
 paths:
-  /.well-known/upp-capabilities:
+  /.well-known/upp:
     get:
-      summary: Fetch vendor capability document
-      operationId: getCapabilities
+      summary: Fetch vendor capability profile
+      operationId: getCapabilityProfile
       responses:
         "200":
-          description: Capability document
+          description: Capability profile
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/CapabilityDocument"
+                $ref: "#/components/schemas/CapabilityProfile"
+  /source-artifacts:
+    post:
+      summary: Register source procurement artifact metadata
+      operationId: createSourceArtifact
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SourceArtifact"
+      responses:
+        "201":
+          description: Source artifact registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceArtifact"
+  /source-artifacts/{artifactId}:
+    get:
+      summary: Fetch source artifact metadata
+      operationId: getSourceArtifact
+      parameters:
+        - in: path
+          name: artifactId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Source artifact
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SourceArtifact"
+  /intents:
+    post:
+      summary: Create intent
+      operationId: createIntent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Intent"
+      responses:
+        "201":
+          description: Intent created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intent"
+  /intents/{intentId}:
+    get:
+      summary: Fetch intent
+      operationId: getIntent
+      parameters:
+        - in: path
+          name: intentId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Intent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intent"
+  /discovery/requests:
+    post:
+      summary: Execute discovery request
+      operationId: createDiscoveryRequest
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscoveryRequest"
+      responses:
+        "201":
+          description: Discovery request accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscoveryResponse"
+  /discovery/responses/{responseId}:
+    get:
+      summary: Fetch discovery response
+      operationId: getDiscoveryResponse
+      parameters:
+        - in: path
+          name: responseId
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Discovery response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscoveryResponse"
   /rfqs:
     post:
       summary: Submit RFQ
@@ -159,352 +262,23 @@ paths:
                 $ref: "#/components/schemas/ApprovalStatus"
 components:
   schemas:
-    Party:
-      type: object
-      required: [id, name]
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        contactEmail:
-          type: string
-          format: email
-        externalIds:
-          type: object
-          additionalProperties:
-            type: string
-    PaymentTerms:
-      type: object
-      properties:
-        code:
-          type: string
-        dueDays:
-          type: integer
-          minimum: 0
-        discountPercent:
-          type: number
-          minimum: 0
-    Envelope:
-      type: object
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    Extensions:
-      type: object
-      propertyNames:
-        pattern: "^[a-z0-9]+(\\.[a-z0-9-]+)+$"
-      additionalProperties: true
-    CapabilityDocument:
-      type: object
-      required: [specVersion, id, type, vendor, supportedModules, endpoints]
-      properties:
-        schemaVersion:
-          type: string
-        specVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: CapabilityDocument
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        vendor:
-          $ref: "#/components/schemas/Party"
-        supportedModules:
-          type: array
-          items:
-            type: string
-        auth:
-          type: object
-          properties:
-            methods:
-              type: array
-              items:
-                type: string
-        endpoints:
-          type: object
-          properties:
-            rfq:
-              type: string
-            purchaseOrders:
-              type: string
-            invoices:
-              type: string
-            approvals:
-              type: string
-        constraints:
-          type: object
-          additionalProperties: true
-        extensions:
-          $ref: "#/components/schemas/Extensions"
-    RFQLineItem:
-      type: object
-      required: [id, description, quantity, unit]
-      properties:
-        id:
-          type: string
-        description:
-          type: string
-        quantity:
-          type: number
-        unit:
-          type: string
-        targetUnitPrice:
-          type: number
-          minimum: 0
+    CapabilityProfile:
+      $ref: ../schemas/capability-profile.schema.json
+    SourceArtifact:
+      $ref: ../schemas/source-artifact.schema.json
+    Intent:
+      $ref: ../schemas/intent.schema.json
+    DiscoveryRequest:
+      $ref: ../schemas/discovery-request.schema.json
+    DiscoveryResponse:
+      $ref: ../schemas/discovery-response.schema.json
     RFQ:
-      type: object
-      required: [specVersion, id, type, buyer, vendor, lineItems, responseDueAt]
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: RFQ
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        buyer:
-          $ref: "#/components/schemas/Party"
-        vendor:
-          $ref: "#/components/schemas/Party"
-        currency:
-          type: string
-        responseDueAt:
-          type: string
-          format: date-time
-        paymentTerms:
-          $ref: "#/components/schemas/PaymentTerms"
-        lineItems:
-          type: array
-          items:
-            $ref: "#/components/schemas/RFQLineItem"
-        extensions:
-          $ref: "#/components/schemas/Extensions"
+      $ref: ../schemas/rfq.schema.json
     Quote:
-      type: object
-      required: [specVersion, id, type, rfqId, vendor, lineItems, validUntil, currency]
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: Quote
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        rfqId:
-          type: string
-        vendor:
-          $ref: "#/components/schemas/Party"
-        currency:
-          type: string
-        validUntil:
-          type: string
-          format: date-time
-        paymentTerms:
-          $ref: "#/components/schemas/PaymentTerms"
-        lineItems:
-          type: array
-          items:
-            type: object
-            properties:
-              rfqLineItemId:
-                type: string
-              quantity:
-                type: number
-              unitPrice:
-                type: number
-              leadTimeDays:
-                type: integer
-        totals:
-          type: object
-          properties:
-            subtotal:
-              type: number
-            tax:
-              type: number
-            total:
-              type: number
-        extensions:
-          $ref: "#/components/schemas/Extensions"
-    ApprovalStatus:
-      type: object
-      required: [specVersion, id, type, resourceType, resourceId, state]
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: ApprovalStatus
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        resourceType:
-          type: string
-        resourceId:
-          type: string
-        state:
-          type: string
-          enum: [not_required, pending, approved, rejected]
-        updatedAt:
-          type: string
-          format: date-time
+      $ref: ../schemas/quote.schema.json
     PurchaseOrder:
-      type: object
-      required: [specVersion, id, type, buyer, vendor, lineItems, status, currency]
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: PurchaseOrder
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        buyer:
-          $ref: "#/components/schemas/Party"
-        vendor:
-          $ref: "#/components/schemas/Party"
-        rfqId:
-          type: string
-        quoteId:
-          type: string
-        status:
-          type: string
-        currency:
-          type: string
-        paymentTerms:
-          $ref: "#/components/schemas/PaymentTerms"
-        approvalStatus:
-          $ref: "#/components/schemas/ApprovalStatus"
-        lineItems:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              description:
-                type: string
-              quantity:
-                type: number
-              unit:
-                type: string
-              unitPrice:
-                type: number
-        totals:
-          type: object
-          properties:
-            subtotal:
-              type: number
-            tax:
-              type: number
-            total:
-              type: number
-        extensions:
-          $ref: "#/components/schemas/Extensions"
+      $ref: ../schemas/purchase-order.schema.json
     Invoice:
-      type: object
-      required: [specVersion, id, type, invoiceNumber, buyer, vendor, currency, lineItems, matchStatus]
-      properties:
-        specVersion:
-          type: string
-        schemaVersion:
-          type: string
-        id:
-          type: string
-        type:
-          const: Invoice
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        invoiceNumber:
-          type: string
-        buyer:
-          $ref: "#/components/schemas/Party"
-        vendor:
-          $ref: "#/components/schemas/Party"
-        purchaseOrderId:
-          type: string
-        quoteId:
-          type: string
-        currency:
-          type: string
-        issuedAt:
-          type: string
-          format: date-time
-        dueAt:
-          type: string
-          format: date-time
-        paymentTerms:
-          $ref: "#/components/schemas/PaymentTerms"
-        matchStatus:
-          type: string
-          enum: [matched, mismatch, pending_review]
-        lineItems:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-              description:
-                type: string
-              quantity:
-                type: number
-              unitPrice:
-                type: number
-        totals:
-          type: object
-          properties:
-            subtotal:
-              type: number
-            tax:
-              type: number
-            total:
-              type: number
-        extensions:
-          $ref: "#/components/schemas/Extensions"
+      $ref: ../schemas/invoice.schema.json
+    ApprovalStatus:
+      $ref: ../schemas/approval.schema.json
